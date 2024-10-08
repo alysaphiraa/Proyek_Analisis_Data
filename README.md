@@ -15,11 +15,6 @@ For further information, like the background of this dataset, dataset characteri
 │   ├── Readme.txt
 │   ├── day.csv
 |   └── hour.csv
-├── screenshots
-|   ├── Screenshots (91).png
-|   ├── Screenshots (92).png
-|   ├── Screenshots (93).png
-|   └── Screenshots (94).png
 ├── README.md
 ├── notebook.ipynb
 └── requirements.txt
@@ -57,12 +52,3 @@ For further information, like the background of this dataset, dataset characteri
 3. Please note, don't move the csv file because it acts a data source. keep it in one folder as dashboard.py
 4. Open your VSCode and run the file by clicking the terminal and write it `streamlit run dashboard.py`.
 
-## 4. Screenshots
-
-![alt text](https://github.com/OrNixz/bike-sharing-rentals/blob/main/screenshots/Screenshot%20(91).png?raw=true)
-
-![alt text](https://github.com/OrNixz/bike-sharing-rentals/blob/main/screenshots/Screenshot%20(92).png?raw=true)
-
-![alt text](https://github.com/OrNixz/bike-sharing-rentals/blob/main/screenshots/Screenshot%20(93).png?raw=true)
-
-![alt text](https://github.com/OrNixz/bike-sharing-rentals/blob/main/screenshots/Screenshot%20(94).png?raw=true)
