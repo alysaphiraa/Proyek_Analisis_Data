@@ -2,7 +2,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import streamlit as st
-from babel.numbers import format_currency
 
 # Set style seaborn
 sns.set(style='dark')
@@ -64,10 +63,7 @@ def create_daily_registered_rent_df(df):
 
 # Menyiapkan season_rent_df
 def create_season_rent_df(df):
-    season_rent_df = df.groupby(by='season_labels').agg({
-        'registered': 'sum',
-        'casual': 'sum'
-    }).reset_index()
+    season_rent_df = df.groupby(by='season_labels')[['registered', 'casual']].sum().reset_index()
     return season_rent_df
 
 # Menyiapkan monthly_rent_df
@@ -79,6 +75,7 @@ def create_monthly_rent_df(df):
         'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
         'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
     ]
+    monthly_rent_df = monthly_rent_df.reindex(ordered_months, fill_value=0)
     return monthly_rent_df
 
 # Menyiapkan weekday_rent_df
@@ -204,8 +201,8 @@ for index, row in season_rent_df.iterrows():
     ax.text(index, row['registered'], str(row['registered']), ha='center', va='bottom', fontsize=10)
     ax.text(index, row['casual'], str(row['casual']), ha='center', va='bottom', fontsize=10)
 
-ax.set_xlabel('x')
-ax.set_ylabel('y')
+ax.set_xlabel(None)
+ax.set_ylabel(None)
 ax.tick_params(axis='x', labelsize=15, rotation=0)
 ax.tick_params(axis='y', labelsize=10)
 ax.legend()
@@ -253,7 +250,7 @@ for index, row in enumerate(workingday_rent_df['count']):
     axes[0].text(index, row + 1, str(row), ha='center', va='bottom', fontsize=12)
 
 axes[0].set_title('Rents based on Working Day')
-# axes[0].set_ylabel(None)
+axes[0].set_ylabel(None)
 axes[0].tick_params(axis='x', labelsize=15)
 axes[0].tick_params(axis='y', labelsize=10)
 
@@ -285,7 +282,8 @@ for index, row in enumerate(weekday_rent_df['count']):
 
 axes[2].set_title('Rent based on Weekday')
 # axes[2].set_ylabel(None)
-axes[2].tick_params(axis='x', labelsize=15)
+axes[2].tick_params(axis='x', labelsize=20)
 axes[2].tick_params(axis='y', labelsize=15)
+
 plt.tight_layout()
 st.pyplot(fig)
