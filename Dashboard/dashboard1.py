@@ -7,7 +7,7 @@ import streamlit as st
 sns.set(style='dark')
 
 # Menyiapkan data day_df
-day_df = pd.read_csv("dashboard/day.csv")
+day_df = pd.read_csv("https://raw.githubusercontent.com/alysaphiraa/Proyek_Analisis_Data/refs/heads/main/Dashboard/main_data.csv")
 day_df.head()
 
 # Menghapus kolom yang tidak diperlukan
@@ -22,7 +22,8 @@ day_df.rename(columns={
     'dteday': 'dateday',
     'yr': 'year',
     'mnth': 'month',
-    'weathersit': 'weather_cond',
+    'weathersit': 'weather_labels',
+    'season_labels',
     'cnt': 'count'
 }, inplace=True)
 
@@ -31,17 +32,17 @@ day_df['month'] = day_df['month'].map({
     1: 'Jan', 2: 'Feb', 3: 'Mar', 4: 'Apr', 5: 'May', 6: 'Jun',
     7: 'Jul', 8: 'Aug', 9: 'Sep', 10: 'Oct', 11: 'Nov', 12: 'Dec'
 })
-day_df['season'] = day_df['season'].map({
+day_df['season_labels'] = day_df['season_labels'].map({
     1: 'Spring', 2: 'Summer', 3: 'Fall', 4: 'Winter'
 })
 day_df['weekday'] = day_df['weekday'].map({
     0: 'Sun', 1: 'Mon', 2: 'Tue', 3: 'Wed', 4: 'Thu', 5: 'Fri', 6: 'Sat'
 })
-day_df['weather_cond'] = day_df['weather_cond'].map({
-    1: 'Clear/Partly Cloudy',
-    2: 'Misty/Cloudy',
-    3: 'Light Snow/Rain',
-    4: 'Severe Weather'
+day_df['weather_labels'] = day_df['weather_labels'].map({
+    1: 'Clear',
+    2: 'Mist',
+    3: 'Light Rain',
+    4: 'Heavy Rain'
 })
 
 
@@ -68,7 +69,7 @@ def create_daily_registered_rent_df(df):
     
 # Menyiapkan season_rent_df
 def create_season_rent_df(df):
-    season_rent_df = df.groupby(by='season')[['registered', 'casual']].sum().reset_index()
+    season_rent_df = df.groupby(by='season_labels')[['registered', 'casual']].sum().reset_index()
     return season_rent_df
 
 # Menyiapkan monthly_rent_df
@@ -106,7 +107,7 @@ def create_holiday_rent_df(df):
 
 # Menyiapkan weather_rent_df
 def create_weather_rent_df(df):
-    weather_rent_df = df.groupby(by='weather_cond').agg({
+    weather_rent_df = df.groupby(by='weather_labels').agg({
         'count': 'sum'
     })
     return weather_rent_df
@@ -144,7 +145,7 @@ weather_rent_df = create_weather_rent_df(main_df)
 # Membuat Dashboard secara lengkap
 
 # Membuat judul
-st.header('Bike Rental Dashboard 🚲')
+st.header('Dashboard Bike Rentals')
 
 # Membuat jumlah penyewaan harian
 st.subheader('Daily Rentals')
@@ -181,12 +182,12 @@ ax.tick_params(axis='y', labelsize=20)
 st.pyplot(fig)
 
 # Membuat jumlah penyewaan berdasarkan season
-st.subheader('Seasonly Rentals')
+st.subheader('Rentals based on Season')
 
 fig, ax = plt.subplots(figsize=(16, 8))
 
 sns.barplot(
-    x='season',
+    x='season_labels',
     y='registered',
     data=season_rent_df,
     label='Registered',
@@ -195,7 +196,7 @@ sns.barplot(
 )
 
 sns.barplot(
-    x='season',
+    x='season_labels',
     y='casual',
     data=season_rent_df,
     label='Casual',
@@ -215,7 +216,7 @@ ax.legend()
 st.pyplot(fig)
 
 # Membuah jumlah penyewaan berdasarkan kondisi cuaca
-st.subheader('Weatherly Rentals')
+st.subheader('Rentals based on Weather')
 
 fig, ax = plt.subplots(figsize=(16, 8))
 
