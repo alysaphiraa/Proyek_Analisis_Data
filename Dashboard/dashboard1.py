@@ -63,7 +63,10 @@ def create_daily_registered_rent_df(df):
 
 # Menyiapkan season_rent_df
 def create_season_rent_df(df):
-    season_rent_df = df.groupby(by='season_labels')[['registered', 'casual']].sum().reset_index()
+    season_rent_df = df.groupby(by='season_labels').agg({
+        'registered': 'sum',
+        'casual': 'sum'
+    }).reset_index()
     return season_rent_df
 
 # Menyiapkan monthly_rent_df
@@ -75,7 +78,6 @@ def create_monthly_rent_df(df):
         'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
         'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
     ]
-    monthly_rent_df = monthly_rent_df.reindex(ordered_months, fill_value=0)
     return monthly_rent_df
 
 # Menyiapkan weekday_rent_df
