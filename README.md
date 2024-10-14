@@ -11,7 +11,7 @@ This is a final project from Dicoding in the "Belajar Analisis Data Dengan Pytho
 ├── Dashboard
 │   ├── dashboard1.py
 │   ├── logo bike rentals.png
-│   └── main_data.csv
+│   └── day.csv
 ├── data
 │   ├── Readme.txt
 │   ├── day.csv
