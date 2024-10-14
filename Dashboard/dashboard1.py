@@ -165,7 +165,7 @@ st.subheader('Rent based on Season')
 fig, ax = plt.subplots(figsize=(16, 8))
 
 sns.barplot(
-    x='casual',
+    x='season_labels',
     y='registered',
     data=season_rent_df,
     label='Registered',
@@ -186,8 +186,8 @@ for index, row in season_rent_df.iterrows():
     ax.text(index, row['registered'], str(row['registered']), ha='center', va='bottom', fontsize=10)
     ax.text(index, row['casual'], str(row['casual']), ha='center', va='bottom', fontsize=10)
 
-ax.set_xlabel('x')
-ax.set_ylabel('y')
+ax.set_xlabel('casual')
+ax.set_ylabel('registered')
 ax.tick_params(axis='x', labelsize=15, rotation=0)
 ax.tick_params(axis='y', labelsize=10)
 ax.legend()
