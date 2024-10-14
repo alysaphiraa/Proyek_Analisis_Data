@@ -11,13 +11,13 @@ This is a final project from Dicoding in the "Belajar Analisis Data Dengan Pytho
 ├── Dashboard
 │   ├── dashboard1.py
 │   ├── logo bike rentals.png
-│   └── day.csv
+│   └── main_data.csv
 ├── data
 │   ├── Readme.txt
 │   ├── day.csv
 |   └── hour.csv
 ├── README.md
-├── notebook(1).ipynb
+├── notebook(2).ipynb
 └── requirements.txt
 ```
 
@@ -39,7 +39,7 @@ This is a final project from Dicoding in the "Belajar Analisis Data Dengan Pytho
 **Note: Numbers 1 to 3 are in the dicoding-collection-exercise and number 4 is in dashboard.**
 
 ## 3. Getting Started
-### `notebook(1).ipynb`
+### `notebook(2).ipynb`
 1. Download this project.
 2. Open Google Colab.
 3. Create a New Notebook.
@@ -47,9 +47,9 @@ This is a final project from Dicoding in the "Belajar Analisis Data Dengan Pytho
 5. Connect to hosted runtime.
 6. Lastly, run the code cells.
 
-### `Dashboard/dashboard.py`
+### `Dashboard/dashboard1.py`
 1. Download this project.
 2. Install the Streamlit in your terminal or command prompt using `pip install streamlit`. Then, Install another libraries like pandas, numpy, scipy, matplotlib, and seaborn if you haven't.
 3. Please note, don't move the csv file because it acts a data source. keep it in one folder as dashboard.py
-4. Open your VSCode and run the file by clicking the terminal and write it `streamlit run dashboard.py`.
+4. Open your VSCode and run the file by clicking the terminal and write it `streamlit run dashboard1.py`.
 
