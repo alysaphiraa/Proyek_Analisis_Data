@@ -158,7 +158,7 @@ with col3:
 
 # Membuat jumlah penyewaan bulanan
 st.subheader('Monthly Rentals')
-fig, ax = plt.subplots(figsize=(15, 8))
+fig, ax = plt.subplots(figsize=(9, 8))
 ax.plot(
     monthly_rent_df.index,
     monthly_rent_df['count'],
