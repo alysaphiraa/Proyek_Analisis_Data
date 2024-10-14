@@ -40,97 +40,107 @@ day_df['weather_labels'] = day_df['weather_labels'].map({
     4: 'Heavy Rain'
 })
 
-# Define functions for data preparation
-def create_daily_rent_df(df):
-    daily_rent_df = df.groupby(by='dateday').agg({
-        'count': 'sum'
-    }).reset_index()
-    return daily_rent_df
+# Ensure casual and registered columns exist in the data
+if 'casual' not in day_df.columns or 'registered' not in day_df.columns:
+    st.error("Data is missing 'casual' or 'registered' columns. Please verify the data.")
+else:
+    # Define functions for data preparation
+    def create_daily_rent_df(df):
+        daily_rent_df = df.groupby(by='dateday').agg({
+            'count': 'sum'
+        }).reset_index()
+        return daily_rent_df
 
-def create_season_rent_df(df):
-    season_rent_df = df.groupby(by='season_labels')[['registered', 'casual']].sum().reset_index()
-    return season_rent_df
+    def create_season_rent_df(df):
+        season_rent_df = df.groupby(by='season_labels')[['registered', 'casual']].sum().reset_index()
+        return season_rent_df
 
-def create_monthly_rent_df(df):
-    monthly_rent_df = df.groupby(by='month').agg({
-        'count': 'sum'
-    })
-    ordered_months = [
-        'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-    ]
-    monthly_rent_df = monthly_rent_df.reindex(ordered_months, fill_value=0)
-    return monthly_rent_df
+    def create_monthly_rent_df(df):
+        monthly_rent_df = df.groupby(by='month').agg({
+            'count': 'sum'
+        })
+        ordered_months = [
+            'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+        ]
+        monthly_rent_df = monthly_rent_df.reindex(ordered_months, fill_value=0)
+        return monthly_rent_df
 
-def create_weather_rent_df(df):
-    weather_rent_df = df.groupby(by='weather_labels').agg({
-        'count': 'sum'
-    }).reset_index()
-    return weather_rent_df
+    def create_weather_rent_df(df):
+        weather_rent_df = df.groupby(by='weather_labels').agg({
+            'count': 'sum'
+        }).reset_index()
+        return weather_rent_df
 
-# Sidebar filters and logo
-min_date = pd.to_datetime(day_df['dateday']).dt.date.min()
-max_date = pd.to_datetime(day_df['dateday']).dt.date.max()
+    # Sidebar filters and logo
+    min_date = pd.to_datetime(day_df['dateday']).dt.date.min()
+    max_date = pd.to_datetime(day_df['dateday']).dt.date.max()
 
-with st.sidebar:
-    st.image('Dashboard/logo bike rentals.png')
-    start_date, end_date = st.date_input(
-        label='Rentang Waktu',
-        min_value=min_date,
-        max_value=max_date,
-        value=[min_date, max_date]
+    with st.sidebar:
+        st.image('Dashboard/logo bike rentals.png')
+        start_date, end_date = st.date_input(
+            label='Rentang Waktu',
+            min_value=min_date,
+            max_value=max_date,
+            value=[min_date, max_date]
+        )
+
+    main_df = day_df[(day_df['dateday'] >= pd.to_datetime(start_date)) & 
+                     (day_df['dateday'] <= pd.to_datetime(end_date))]
+
+    # Data preparation
+    daily_rent_df = create_daily_rent_df(main_df)
+    season_rent_df = create_season_rent_df(main_df)
+    monthly_rent_df = create_monthly_rent_df(main_df)
+    weather_rent_df = create_weather_rent_df(main_df)
+
+    # Dashboard Title
+    st.header('Dashboard Bike Rentals')
+
+    # Daily Rentals
+    st.subheader('Daily Rentals')
+    col1, col2, col3 = st.columns(3)
+
+    with col1:
+        st.metric('Casual User', value=main_df['casual'].sum())
+
+    with col2:
+        st.metric('Registered User', value=main_df['registered'].sum())
+
+    with col3:
+        st.metric('Total User', value=main_df['count'].sum())
+
+    # Monthly Rentals Plot
+    st.subheader('Monthly Rentals')
+    fig, ax = plt.subplots(figsize=(24, 8))
+    ax.plot(
+        monthly_rent_df.index,
+        monthly_rent_df['count'],
+        marker='o', 
+        linewidth=2,
+        color='tab:blue'
     )
+    ax.tick_params(axis='x', labelsize=25, rotation=45)
+    ax.tick_params(axis='y', labelsize=20)
+    st.pyplot(fig)
 
-main_df = day_df[(day_df['dateday'] >= str(start_date)) & 
-                 (day_df['dateday'] <= str(end_date))]
+    # Rentals by Season Plot
+    st.subheader('Rentals by Season')
+    fig, ax = plt.subplots(figsize=(16, 8))
+    sns.barplot(x='season_labels', y='registered', data=season_rent_df, label='Registered', color='tab:green', ax=ax)
+    sns.barplot(x='season_labels', y='casual', data=season_rent_df, label='Casual', color='tab:blue', ax=ax)
+    ax.set_xlabel('Season', fontsize=15)
+    ax.set_ylabel('Rentals', fontsize=15)
+    ax.tick_params(axis='x', labelsize=15)
+    ax.legend()
+    st.pyplot(fig)
 
-# Data preparation
-daily_rent_df = create_daily_rent_df(main_df)
-season_rent_df = create_season_rent_df(main_df)
-monthly_rent_df = create_monthly_rent_df(main_df)
-weather_rent_df = create_weather_rent_df(main_df)
-
-# Dashboard Title
-st.header('Dashboard Bike Rentals')
-
-# Daily Rentals
-st.subheader('Daily Rentals')
-col1, col2, col3 = st.columns(3)
-
-with col1:
-    st.metric('Casual User', value=daily_rent_df['count'].sum())
-
-# Monthly Rentals Plot
-st.subheader('Monthly Rentals')
-fig, ax = plt.subplots(figsize=(24, 8))
-ax.plot(
-    monthly_rent_df.index,
-    monthly_rent_df['count'],
-    marker='o', 
-    linewidth=2,
-    color='tab:blue'
-)
-ax.tick_params(axis='x', labelsize=25, rotation=45)
-ax.tick_params(axis='y', labelsize=20)
-st.pyplot(fig)
-
-# Rentals by Season Plot
-st.subheader('Rentals by Season')
-fig, ax = plt.subplots(figsize=(16, 8))
-sns.barplot(x='season_labels', y='registered', data=season_rent_df, label='Registered', color='tab:green', ax=ax)
-sns.barplot(x='season_labels', y='casual', data=season_rent_df, label='Casual', color='tab:blue', ax=ax)
-ax.set_xlabel('Season', fontsize=15)
-ax.set_ylabel('Rentals', fontsize=15)
-ax.tick_params(axis='x', labelsize=15)
-ax.legend()
-st.pyplot(fig)
-
-# Rentals by Weather Plot
-st.subheader('Rentals by Weather')
-fig, ax = plt.subplots(figsize=(16, 8))
-sns.barplot(x='weather_labels', y='count', data=weather_rent_df, ax=ax)
-ax.set_xlabel('Weather Conditions', fontsize=15)
-ax.set_ylabel('Rentals', fontsize=15)
-ax.tick_params(axis='x', labelsize=15)
-ax.tick_params(axis='y', labelsize=15)
-st.pyplot(fig)
+    # Rentals by Weather Plot
+    st.subheader('Rentals by Weather')
+    fig, ax = plt.subplots(figsize=(16, 8))
+    sns.barplot(x='weather_labels', y='count', data=weather_rent_df, ax=ax)
+    ax.set_xlabel('Weather Conditions', fontsize=15)
+    ax.set_ylabel('Rentals', fontsize=15)
+    ax.tick_params(axis='x', labelsize=15)
+    ax.tick_params(axis='y', labelsize=15)
+    st.pyplot(fig)
