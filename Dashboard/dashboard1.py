@@ -159,7 +159,7 @@ with col3:
 # Membuat jumlah penyewaan bulanan
 st.subheader("Monthly Rentals")
 fig, ax = plt.subplots()
-sns.lineplot(data=monthly_df, x="month", y="count", hue="yr", palette="pastel", marker="o")
+sns.lineplot(data=monthly_rent_df, x="month", y="count", hue="yr", palette="pastel", marker="o")
 plt.xlabel("Month")
 plt.ylabel("Count")
 plt.title("Jumlah total sepeda yang disewakan berdasarkan Bulan dan tahun")
