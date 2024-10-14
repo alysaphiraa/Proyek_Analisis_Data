@@ -167,7 +167,7 @@ with col3:
 st.subheader('Monthly Rentals')
 fig, ax = plt.subplots(figsize=(24, 8))
 ax.plot(
-    monthly_rent_df['registered'],
+    monthly_rent_df['sum'],
     monthly_rent_df['count'],
     marker='o', 
     linewidth=2,
