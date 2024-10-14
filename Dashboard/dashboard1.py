@@ -7,8 +7,7 @@ import streamlit as st
 sns.set(style='dark')
 
 # Menyiapkan data day_df
-day_df = pd.read_csv(
-    "https://raw.githubusercontent.com/alysaphiraa/Proyek_Analisis_Data/refs/heads/main/Dashboard/main_data.csv",
+day_df = pd.read_csv("https://raw.githubusercontent.com/alysaphiraa/Proyek_Analisis_Data/refs/heads/main/Dashboard/main_data.csv",
     parse_dates=['dteday']
 )
 
