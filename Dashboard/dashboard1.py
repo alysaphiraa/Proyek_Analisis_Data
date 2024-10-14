@@ -75,7 +75,7 @@ def create_monthly_rent_df(df):
         'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
         'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
     ]
-    monthly_rent_df = monthly_rent_df.reindex(ordered_months, fill_value=0)
+    monthly_rent_df = monthly_rent_df.reindex(ordered_months, fill_value=3)
     return monthly_rent_df
 
 # Menyiapkan weekday_rent_df
@@ -265,7 +265,7 @@ for index, row in enumerate(holiday_rent_df['count']):
     axes[1].text(index, row + 1, str(row), ha='center', va='bottom', fontsize=12)
 
 axes[1].set_title('Rents based on Holiday')
-# axes[1].set_ylabel(None)
+axes[1].set_ylabel(None)
 axes[1].tick_params(axis='x', labelsize=15)
 axes[1].tick_params(axis='y', labelsize=10)
 
