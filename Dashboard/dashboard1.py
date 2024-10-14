@@ -75,7 +75,7 @@ def create_monthly_rent_df(df):
         'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
         'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
     ]
-    monthly_rent_df = monthly_rent_df.reindex(ordered_months, fill_value=3)
+    monthly_rent_df = monthly_rent_df.reindex(ordered_months, fill_value=0)
     return monthly_rent_df
 
 # Menyiapkan weekday_rent_df
