@@ -170,7 +170,7 @@ ax.plot(
 for index, row in enumerate(monthly_rent_df['count']):
     ax.text(index, row + 1, str(row), ha='center', va='bottom', fontsize=12)
 
-ax.tick_params(axis='x', labelsize=10, rotation=45)
+ax.tick_params(axis='x', labelsize=10, rotation=30)
 ax.tick_params(axis='y', labelsize=15)
 st.pyplot(fig)
 
