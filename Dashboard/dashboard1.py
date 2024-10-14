@@ -285,5 +285,6 @@ axes[2].set_title('Rent based on Weekday')
 axes[2].tick_params(axis='x', labelsize=15)
 axes[2].tick_params(axis='y', labelsize=10)
 
-
-st.pyplot(fig)
+fig.tight_layout()  # Adjust layout
+st.pyplot(fig)  # Render figure in Streamlit
+plt.close(fig)  # Close figure to prevent reuse
