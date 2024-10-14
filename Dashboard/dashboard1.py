@@ -282,8 +282,8 @@ for index, row in enumerate(weekday_rent_df['count']):
 
 axes[2].set_title('Rent based on Weekday')
 # axes[2].set_ylabel(None)
-axes[2].tick_params(axis='x', labelsize=20)
-axes[2].tick_params(axis='y', labelsize=15)
+axes[2].tick_params(axis='x', labelsize=15)
+axes[2].tick_params(axis='y', labelsize=10)
 
 plt.tight_layout()
 st.pyplot(fig)
