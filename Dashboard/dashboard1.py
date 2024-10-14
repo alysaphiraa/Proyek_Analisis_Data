@@ -10,6 +10,13 @@ sns.set(style='dark')
 day_df = pd.read_csv("https://raw.githubusercontent.com/alysaphiraa/Proyek_Analisis_Data/refs/heads/main/Dashboard/main_data.csv")
 day_df.head()
 
+# Menghapus kolom yang tidak diperlukan
+drop_col = ['windspeed']
+
+for i in day_df.columns:
+  if i in drop_col:
+    day_df.drop(labels=i, axis=1, inplace=True)
+      
 # Mengubah nama judul kolom
 day_df.rename(columns={
     'dteday': 'dateday',
