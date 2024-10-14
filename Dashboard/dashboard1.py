@@ -170,8 +170,10 @@ ax.plot(
 for index, row in enumerate(monthly_rent_df['count']):
     ax.text(index, row + 1, str(row), ha='center', va='bottom', fontsize=12)
 
-ax.tick_params(axis='x', labelsize=25, rotation=45)
-ax.tick_params(axis='y', labelsize=20)
+ax.set_xlabel('Month', fontsize=15)
+ax.set_ylabel('Total Rentals', fontsize=15)
+ax.tick_params(axis='x', labelsize=12, rotation=45)
+ax.tick_params(axis='y', labelsize=12)
 st.pyplot(fig)
 
 # Membuat jumlah penyewaan berdasarkan season
