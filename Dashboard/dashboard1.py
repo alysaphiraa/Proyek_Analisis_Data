@@ -4,7 +4,7 @@ import seaborn as sns
 import streamlit as st
 
 # Set seaborn style for plots
-sns.set(style='darkgrid')
+sns.set(style='dark')
 
 # Load the dataset
 day_df = pd.read_csv("https://raw.githubusercontent.com/alysaphiraa/Proyek_Analisis_Data/refs/heads/main/Dashboard/main_data.csv")
