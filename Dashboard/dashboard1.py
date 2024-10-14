@@ -165,7 +165,7 @@ st.subheader('Rent based on Season')
 fig, ax = plt.subplots(figsize=(16, 8))
 
 sns.barplot(
-    x='season_labels',
+    x='casual',
     y='registered',
     data=season_rent_df,
     label='Registered',
