@@ -157,21 +157,18 @@ with col3:
     st.metric('Total User', value= daily_rent_total)
 
 # Membuat jumlah penyewaan bulanan
-st.subheader('Monthly Rentals')
-fig, ax = plt.subplots(figsize=(24, 8))
-ax.plot(
-    monthly_rent_df.index,
-    monthly_rent_df['count'],
-    marker='o', 
-    linewidth=2,
-    color='tab:blue'
-)
-
-for index, row in enumerate(monthly_rent_df['count']):
-    ax.text(index, row + 1, str(row), ha='center', va='bottom', fontsize=12)
-
-ax.tick_params(axis='x', labelsize=10, rotation=30)
-ax.tick_params(axis='y', labelsize=15)
+st.subheader("Monthly Rentals")
+fig, ax = plt.subplots()
+sns.lineplot(data=monthly_df, x="month", y="count", hue="yr", palette="pastel", marker="o")
+plt.xlabel("Month")
+plt.ylabel("Count")
+plt.title("Jumlah total sepeda yang disewakan berdasarkan Bulan dan tahun")
+plt.legend(title="Year", loc="upper right")  
+plt.xticks(ticks=monthly_df["mnth"], labels=monthly_df["month"])
+plt.tight_layout()
+for line in ax.lines:
+    for x, y in zip(line.get_xdata(), line.get_ydata()):
+        plt.text(x, y, '{:.0f}'.format(y), color="white", ha="center", fontsize=8).set_backgroundcolor("gray")
 st.pyplot(fig)
 
 # Membuat jumlah penyewaan berdasarkan season
