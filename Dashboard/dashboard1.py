@@ -225,7 +225,6 @@ colors=["tab:blue", "tab:orange", "tab:green"]
 sns.barplot(
     x=weather_rent_df.index,
     y=weather_rent_df['count'],
-    palette=colors,
     ax=ax
 )
 
@@ -252,7 +251,6 @@ sns.barplot(
     x='workingday',
     y='count',
     data=workingday_rent_df,
-    palette=colors1,
     ax=axes[0])
 
 for index, row in enumerate(workingday_rent_df['count']):
@@ -268,7 +266,6 @@ sns.barplot(
   x='holiday',
   y='count',
   data=holiday_rent_df,
-  palette=colors2,
   ax=axes[1])
 
 for index, row in enumerate(holiday_rent_df['count']):
@@ -284,7 +281,6 @@ sns.barplot(
   x='weekday',
   y='count',
   data=weekday_rent_df,
-  palette=colors3,
   ax=axes[2])
 
 for index, row in enumerate(weekday_rent_df['count']):
