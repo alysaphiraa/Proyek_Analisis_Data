@@ -164,7 +164,7 @@ plt.xlabel("Month")
 plt.ylabel("Count")
 plt.title("Jumlah total sepeda yang disewakan berdasarkan Bulan dan tahun")
 plt.legend(title="Year", loc="upper right")  
-plt.xticks(ticks=monthly_df["mnth"], labels=monthly_df["month"])
+plt.xticks(ticks=monthly_rent_df["month"], labels=monthly_rent_df["month"])
 plt.tight_layout()
 for line in ax.lines:
     for x, y in zip(line.get_xdata(), line.get_ydata()):
