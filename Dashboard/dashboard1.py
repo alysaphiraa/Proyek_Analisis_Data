@@ -23,7 +23,7 @@ day_df.rename(columns={
     'yr': 'year',
     'mnth': 'month',
     'weathersit': 'weather_labels',
-    'season_labels',
+    'season': 'season_labels',
     'cnt': 'count'
 }, inplace=True)
 
