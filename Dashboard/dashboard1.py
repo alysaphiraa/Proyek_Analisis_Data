@@ -37,7 +37,7 @@ day_df['weather_labels'] = day_df['weather_labels'].map({
     1: 'Clear',
     2: 'Mist',
     3: 'Light Rain',
-    4: 'Heavt Rain'
+    4: 'Heavy Rain'
 })
 
 # Menyiapkan daily_rent_df
